@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Valentine</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            min-height: 100vh;
+            font-family: 'Playfair Display', serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: #5a1a1a;
+            overflow: hidden; /* Keeps button inside screen */
+        }
+
+        /* Floating Hearts Background */
+        .hearts-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .heart {
+            position: absolute;
+            bottom: -100px;
+            background-color: rgba(255, 107, 129, 0.4);
+            display: inline-block;
+            height: 20px;
+            width: 20px;
+            margin: 0 10px;
+            transform: rotate(-45deg);
+            animation: float 6s ease-in infinite;
+        }
+
+        .heart::before, .heart::after {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: inherit;
+        }
+
+        .heart::before { top: -10px; left: 0; }
+        .heart::after { top: 0; left: 10px; }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(-45deg) scale(0.8); opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(-45deg) scale(1.2); opacity: 0; }
+        }
+
+        /* Card Container */
+        .container {
+            position: relative;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            width: 85%;
+            max-width: 500px;
+            border: 2px solid #ffdde1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 60vh;
+        }
+
+        .slide {
+            display: none;
+            animation: fadeIn 0.6s ease-in-out;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .poem {
+            font-size: 1rem;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            white-space: pre-wrap; 
+            font-style: italic;
+            color: #444;
+        }
+
+        .question-text {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #d63384;
+            margin: 20px 0;
+        }
+
+        .btn-group {
+            margin-top: 10px;
+            height: 50px; /* Space for buttons */
+            position: relative;
+        }
+
+        button {
+            padding: 10px 25px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Playfair Display', serif;
+            margin: 0 10px;
+        }
+
+        .yes-btn {
+            background-color: #d63384;
+            color: white;
+            box-shadow: 0 4px 15px rgba(214, 51, 132, 0.4);
+            transition: transform 0.2s;
+        }
+
+        .yes-btn:active {
+            transform: scale(0.95);
+        }
+
+        .no-btn {
+            background-color: #e0e0e0;
+            color: #333;
+            position: absolute; 
+            transition: all 0.2s ease;
+        }
+
+        /* Final Success Slide */
+        .success-message {
+            font-size: 1.4rem;
+            color: #d63384;
+            margin-top: 20px;
+        }
+        
+        .date-note {
+            font-size: 0.8rem;
+            color: #888;
+            margin-top: 30px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="hearts-bg" id="hearts-container"></div>
+
+    <div class="container">
+        
+        <div class="slide active" id="slide1">
+            <div class="poem">
+Ek karz lunga karz me rkhna,
+Khaamoshi ki goonj me mera haath thaame rkhna,
+Jaan nisaar tak zikr hai tumhara,
+Rooh me mere tum basti ho ye khayal rkhna .
+
+Kisi roz subh ki shuaa me zikr tumhara,
+Shaam ke khurdure roshni me 
+Tumhare chehre ki raunak saari,
+Us panghat ke neeche 
+Zindagi meri tumhari ❤️
+            </div>
+            <div class="question-text">Will you be my valentine RADHA 🥺❤️?</div>
+            <div class="btn-group">
+                <button class="yes-btn" onclick="nextSlide(2)">YES</button>
+                <button class="no-btn" ontouchstart="moveButton(this)" onmouseover="moveButton(this)">NO</button>
+            </div>
+        </div>
+
+        <div class="slide" id="slide2">
+            <div class="poem">
+Us muskurahat ke kai musafir hai,
+Gair ko dar dard ka ehsas hai,
+ddar par bhi mehfooz ye ulfat hai,
+Shaam shaan shaant thair jaaye ye ibaadat hai.
+
+Nazro me talash ki rog jhaak to lo,
+Hasi ko hasi , kabhi dard maan to lo,
+Ishq bekhauf raag ko sufi maan to lo,
+Chadar ki simti aag ko dil maan to lo.
+
+Tum suno to hari Naam ratde,
+Tum dekho to hari darshan darpe,
+Vaani tumhari khuda ke bhi maalik ,
+Mere paas tumse upar na koi dam marte.
+
+Tum reet kisi geet nisaar ki ho jaisi,
+Radha shyaam ki jogan bani ho jaisi,
+Lafz gher die tumne man me,
+Radha hari priya ho tum jaisi.
+            </div>
+            <div class="question-text">Will you be my valentine PRIYE 🥺❤️?</div>
+            <div class="btn-group">
+                <button class="yes-btn" onclick="nextSlide(3)">YES</button>
+                <button class="no-btn" ontouchstart="moveButton(this)" onmouseover="moveButton(this)">NO</button>
+            </div>
+        </div>
+
+        <div class="slide" id="slide3">
+            <div class="poem">
+Har roz koi nai shikwa dhal si jaati hai,
+Aapke zulfon ke narm chhaaon me ,
+Rooh tak jo raaz raazi reh jaati hai,
+Hamare ghar ke aangan me.
+
+Muskurahat musaafir ko tab talab tak rehti hai,
+Aapki unhi ghataaon ki chhaaon me shadab mil jaati hai,
+Khair kare meri saanse jo aapke hoto ko chhu leti hai
+Sheher ke shaalimaar jaisi noor aap meri taaj ban jaati hai.
+
+Peer jo shabd duaon pe subh ho,
+Un hawaao ki ik ghazal si ikraar ho,
+Aapki payal tak ki jhoom mere dil ko jhoom deti hai,
+Aap raaz ho ik meri, saheba ka taqt bhi aapko raas aati hai❤️
+            </div>
+            <div class="question-text">Will you be valentine SAHEBA 🥺❤️?</div>
+            <div class="btn-group">
+                <button class="yes-btn" onclick="nextSlide(4)">YES</button>
+                <button class="no-btn" ontouchstart="moveButton(this)" onmouseover="moveButton(this)">NO</button>
+            </div>
+        </div>
+
+        <div class="slide" id="slide4">
+            <div class="poem">
+Dhairya dhara ki shrot ho tum,
+Bairaag sant me chhupi ek raag tum, 
+geet me jaise ek reet basi hui tum,
+Us reet se jo preet mohe vo mohan ki seet jaisi tum.
+
+Sukh jo hari Naam ke shesh swaas me ,
+Chanchal hrishikesh ke murli ki raas me,
+Tript ganga shiv ke ehsaas me,
+Tum shaanti jo man ko mile , vo hari ke paas me.
+
+Raajsi priya tumhari thaat,
+Man se mohe vo ek chandni raat,
+Us shikhar me yatri vo raatri tumhare saath,
+Tum bin griye dwaar bhi haat.
+
+Tum shayari ik ghazal meri suni,
+Tum baag baag ke shobit maalini,
+Tum chitra priya tumse prem parini,
+Tum mohe preet hriday Ardhangini ❤️
+            </div>
+            <div class="question-text">Will you be my valentine HRIDAY ARDHANGINI 🥺❤️?</div>
+            <div class="btn-group">
+                <button class="yes-btn" onclick="nextSlide(5)">YES</button>
+                <button class="no-btn" ontouchstart="moveButton(this)" onmouseover="moveButton(this)">NO</button>
+            </div>
+        </div>
+
+        <div class="slide" id="slide5">
+            <div class="poem">
+Ek Raaz kahunga raaz rkhna,
+Tumse ishq kia hai ye ehsaas rkhna,
+Shbd musafir nhi honge to zubaan rkhna,
+Khoon ka dariya nas se mere tum tak jaaye to yaad rkhna,
+Mehfil me ki hui atafaq nhi hai ye,
+Ishq hai begam aitraaz ho to meri ankhon ko yaad rkhna
+
+Tumhari khamoshi agar saza bane kabhi,
+To meri khamosh wafaa ka lihaaz rakhna,
+Main shikayat likhun bhi to jala dunga khud,
+Bas meri jali hui ungliyon ka ehsaas rakhna.
+
+Main neend ban kar tumhari palkon pe thehra hoon,
+Khwaab samajh kar mujhe ruswa na karna,
+Jo toot jaun haqeeqat ki thokaron se agar,
+To mere bikhre hue tukdon ko apna rakhna.
+
+Agar kabhi main na rahun, aur naam mera aaye,
+To lafzon mein nahi, saans mein yaad rakhna,
+Mehfil me ki hui atafaq nhi hai ye,
+Ishq hai begam aitraaz ho to meri ankhon ko yaad rkhna
+            </div>
+            <div class="question-text">Will you be my valentine RAASHRAANI 🥺❤️?</div>
+            <div class="btn-group">
+                <button class="yes-btn" onclick="nextSlide(6)">YES</button>
+                <button class="no-btn" ontouchstart="moveButton(this)" onmouseover="moveButton(this)">NO</button>
+            </div>
+        </div>
+
+        <div class="slide" id="slide6">
+            <div class="poem">
+Kheer sagar ki dhara roop tum,
+Madhuban keshav ki raas ho tum,
+Tumhare shree charan me daas mai,
+Us shree charan ki ramaniya shobit jogan tum,
+Dheer dhara ki Shiromani rooprani tum,
+Shaant lochan ki apsara shree sakhi hari tum,
+Prem sudha ki amrit vani tum,
+Bhakti manthan ki shuddh kahani tum,
+Mere hriday mandir ki ekmatra hriday Ardhangini tum❤️❤️💍💍
+            </div>
+            <div class="question-text">Will you be my valentine SHONA 🥺❤️?</div>
+            <div class="btn-group">
+                <button class="yes-btn" onclick="nextSlide(7)">YES</button>
+                <button class="no-btn" ontouchstart="moveButton(this)" onmouseover="moveButton(this)">NO</button>
+            </div>
+        </div>
+
+        <div class="slide" id="slide7">
+            <div class="poem">
+The reign of the sigh in thou love,
+Starves blather of god's shove,
+Fragrant blooms cross my heart,
+Drove the rose petals all on me as a fine art.
+
+Sewing sheet of soul's peace,
+Betting dimes to our lives please 
+Charming choir at church's desk and melody lush,
+Ploughed love in red cheek's blush.
+
+Through thine touch embraced,
+Though my heart's sigh raced,
+Rest to the shy stars shimmering,
+Kissed you darlin' to thine grace.
+
+Sweetheart the quench is real,
+Darling the wait is the deal,
+Nothing but thine touch that I just feel,
+For in thy love alone my wounds shall heal.
+            </div>
+            <div class="question-text">Will you be my valentine shree sakhi 🥺❤️?</div>
+            <div class="btn-group">
+                <button class="yes-btn" onclick="finish()">YES</button>
+                <button class="no-btn" ontouchstart="moveButton(this)" onmouseover="moveButton(this)">NO</button>
+            </div>
+        </div>
+
+        <div class="slide" id="finalSlide">
+            <h1>She said YES! ❤️</h1>
+            <div class="success-message">
+                To my forever Valentine,<br>
+                For every lifetime.
+            </div>
+            <div class="date-note">
+                (From December 8th, 2024 to infinity)
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function createHearts() {
+            const container = document.getElementById('hearts-container');
+            for(let i=0; i<15; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = Math.random() * 3 + 3 + 's';
+                heart.style.opacity = Math.random();
+                container.appendChild(heart);
+            }
+        }
+        createHearts();
+
+        function nextSlide(slideNumber) {
+            const slides = document.querySelectorAll('.slide');
+            slides.forEach(slide => slide.classList.remove('active'));
+            const next = document.getElementById('slide' + slideNumber);
+            if(next) next.classList.add('active');
+        }
+
+        function finish() {
+            const slides = document.querySelectorAll('.slide');
+            slides.forEach(slide => slide.classList.remove('active'));
+            document.getElementById('finalSlide').classList.add('active');
+        }
+
+        function moveButton(btn) {
+            // Get screen dimensions
+            const maxX = window.innerWidth - btn.clientWidth - 20;
+            const maxY = window.innerHeight - btn.clientHeight - 20;
+            
+            // Calculate random position (fixed relative to screen)
+            const randomX = Math.random() * maxX;
+            const randomY = Math.random() * maxY;
+            
+            btn.style.position = 'fixed'; // Make it break out of the layout
+            btn.style.left = randomX + 'px';
+            btn.style.top = randomY + 'px';
+        }
+    </script>
+</body>
+</html>
